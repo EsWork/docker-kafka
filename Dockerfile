@@ -16,10 +16,10 @@ LABEL description="kafka built from source" \
       maintainer="JohnWu <v.la@live.cn>"
 
 #china mirrors repos
-RUN echo "https://mirrors.ustc.edu.cn/alpine/latest-stable/main" > /etc/apk/repositories \
-&&  echo "https://mirrors.ustc.edu.cn/alpine/latest-stable/community" >> /etc/apk/repositories
+# RUN echo "https://mirrors.ustc.edu.cn/alpine/latest-stable/main" > /etc/apk/repositories \
+# &&  echo "https://mirrors.ustc.edu.cn/alpine/latest-stable/community" >> /etc/apk/repositories
 
-RUN  apk -U upgrade && apk add --update --no-cache bash libressl curl fping libcap && mkdir /opt \
+RUN  apk -U upgrade && apk add --update --no-cache bash libressl curl && mkdir /opt \
 && curl -sS -k ${SERVICE_URL}/${SERVICE_VERSION}/kafka_${SCALA_VERSION}-${SERVICE_VERSION}.tgz | gunzip -c - | tar -xf - -C /opt \
 && mv /opt/kafka_${SCALA_VERSION}-${SERVICE_VERSION} ${SERVICE_HOME} \
 && mkdir ${SERVICE_HOME}/data ${SERVICE_HOME}/logs \
