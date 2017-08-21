@@ -1,0 +1,15 @@
+sudo: required
+language: bash
+services: docker
+dist: trusty
+
+branches: 
+  only: 
+    - master
+
+before_install:
+  - docker build -t eswork/kafka -f Dockerfile .
+  
+script: 
+  - docker run --name kafka -d -p 9092:9092 eswork/kafka; sleep 5
+  - docker ps -a | grep -q kafka

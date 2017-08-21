@@ -1,0 +1,5 @@
+kafka:
+  image: eswork/kafka:0.11.0.0
+  ports:
+    - "9092:9092"
+  restart: always
