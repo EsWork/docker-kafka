@@ -8,7 +8,9 @@ ENV SERVICE_HOME=/opt/kafka \
     SERVICE_GID=1000 \
     SERVICE_VERSION=0.11.0.0 \
     SCALA_VERSION=2.12 
-ENV SERVICE_CONF=${SERVICE_HOME}/config/server.properties \
+ENV KAFKA_LOG_DIRS=/opt/kafka/logs \
+    PATH=${SERVICE_HOME}/bin:${PATH} \
+    SERVICE_CONF=${SERVICE_HOME}/config/server.properties \
     SERVICE_URL=http://apache.mirrors.spacedump.net/kafka 
 
 LABEL description="kafka built from source" \
@@ -16,10 +18,10 @@ LABEL description="kafka built from source" \
       maintainer="JohnWu <v.la@live.cn>"
 
 #china mirrors repos
-# RUN echo "https://mirrors.ustc.edu.cn/alpine/latest-stable/main" > /etc/apk/repositories \
-# &&  echo "https://mirrors.ustc.edu.cn/alpine/latest-stable/community" >> /etc/apk/repositories
+RUN echo "https://mirrors.ustc.edu.cn/alpine/latest-stable/main" > /etc/apk/repositories \
+&&  echo "https://mirrors.ustc.edu.cn/alpine/latest-stable/community" >> /etc/apk/repositories
 
-RUN  apk -U upgrade && apk add --update --no-cache bash libressl curl && mkdir /opt \
+RUN  apk -U upgrade && apk add --update --no-cache bash libressl su-exec curl && mkdir /opt \
 && curl -sS -k ${SERVICE_URL}/${SERVICE_VERSION}/kafka_${SCALA_VERSION}-${SERVICE_VERSION}.tgz | gunzip -c - | tar -xf - -C /opt \
 && mv /opt/kafka_${SCALA_VERSION}-${SERVICE_VERSION} ${SERVICE_HOME} \
 && mkdir ${SERVICE_HOME}/data ${SERVICE_HOME}/logs \
@@ -32,9 +34,9 @@ ADD rootfs /
 RUN chmod +x ${SERVICE_HOME}/bin/*.sh \
   && chown -R ${SERVICE_USER}:${SERVICE_GROUP} ${SERVICE_HOME}
 
-USER $SERVICE_USER
 WORKDIR $SERVICE_HOME
 
 EXPOSE 9092
 
-CMD ["/bin/bash","-c","${SERVICE_HOME}/bin/kafka-service.sh start"]
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["kafka-server-start.sh"]
