@@ -18,8 +18,8 @@ LABEL description="kafka built from source" \
       maintainer="JohnWu <v.la@live.cn>"
 
 #china mirrors repos
-RUN echo "https://mirrors.ustc.edu.cn/alpine/latest-stable/main" > /etc/apk/repositories \
-&&  echo "https://mirrors.ustc.edu.cn/alpine/latest-stable/community" >> /etc/apk/repositories
+# RUN echo "https://mirrors.ustc.edu.cn/alpine/latest-stable/main" > /etc/apk/repositories \
+# &&  echo "https://mirrors.ustc.edu.cn/alpine/latest-stable/community" >> /etc/apk/repositories
 
 RUN  apk -U upgrade && apk add --update --no-cache bash libressl su-exec curl && mkdir /opt \
 && curl -sS -k ${SERVICE_URL}/${SERVICE_VERSION}/kafka_${SCALA_VERSION}-${SERVICE_VERSION}.tgz | gunzip -c - | tar -xf - -C /opt \
