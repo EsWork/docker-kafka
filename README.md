@@ -20,8 +20,8 @@ Environment variables
 - **SERVICE_HOME** : kafka home *(default : /opt/kafka)*
 
 - KAFKA_HEAP_OPTS=${JVMFLAGS:-"-Xmx1G -Xms1G"}     				                      # Kafka memory value (optional)
-- KAFKA_LISTENER=	                                                                  # Listerner string
-- KAFKA_ADVERTISE_LISTENER=	                                                          # Listerner advertised string 
+- KAFKA_LISTENER=PLAINTEXT://0.0.0.0:9092	                                          # Listerner string
+- KAFKA_ADVERTISE_LISTENER=PLAINTEXT://0.0.0.0:9092	                                  # Listerner advertised string 
 - KAFKA_DELETE_TOPICS=${KAFKA_DELETE_TOPICS:-"false"}			                      # Enable kafka delete topics
 - KAFKA_LOG_DIRS=/opt/kafka/logs              		                                  # Log directories.
 - KAFKA_LOG_RETENTION_HOURS=${KAFKA_LOG_RETENTION_HOURS:-"168"}	                      # Log retention hours
