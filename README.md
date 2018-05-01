@@ -6,7 +6,7 @@
 
 ## Supported tags and respective `Dockerfile` links
 
-- [`latest` , `1.0.0` (1.0.0/Dockerfile)](https://github.com/EsWork/docker-kafka/blob/master/Dockerfile)
+- [`latest` , `1.1.0` (1.1.0/Dockerfile)](https://github.com/EsWork/docker-kafka/blob/master/Dockerfile)
 
 * eswork/kafka
 
